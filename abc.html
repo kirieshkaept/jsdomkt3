@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Каталог товаров</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .tree-menu, .tree-menu ul {
+            list-style-type: none;
+            padding-left: 25px;
+            margin: 0;
+        }
+        .tree-menu {
+            padding-left: 0;
+        }
+        .tree-menu li {
+            margin: 5px 0;
+            position: relative;
+        }
+        .menu-item {
+            display: inline-flex;
+            align-items: center;
+            background-color: #b82531;
+            color: white;
+            padding: 8px 15px;
+            min-width: 200px;
+            cursor: pointer;
+            border-left: 5px solid #7a141b;
+            user-select: none;
+        }
+        .icon {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 1px solid #333;
+            background-color: white;
+            color: black;
+            text-align: center;
+            line-height: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 10px;
+            position: absolute;
+            left: -20px;
+            top: 12px;
+            cursor: pointer;
+        }
+        .has-children > .nested-list {
+            display: none;
+        }
+        .has-children.open > .nested-list {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Каталог товаров</h2>
+
+    <ul class="tree-menu" id="catalog">
+        <li class="has-children">
+            <span class="icon">+</span>
+            <div class="menu-item">Книги</div>
+            <ul class="nested-list">
+                <li class="has-children">
+                    <span class="icon">+</span>
+                    <div class="menu-item">Отечественные</div>
+                    <ul class="nested-list">
+                        <li><div class="menu-item" data-link="detectives-ru">Детективы</div></li>
+                        <li><div class="menu-item" data-link="sci-fi-ru">Научная фантастика</div></li>
+                        <li><div class="menu-item" data-link="history-ru">Исторические</div></li>
+                    </ul>
+                </li>
+                <li class="has-children">
+                    <span class="icon">+</span>
+                    <div class="menu-item">Зарубежные</div>
+                    <ul class="nested-list">
+                        <li><div class="menu-item" data-link="detectives-en">Детективы</div></li>
+                        <li><div class="menu-item" data-link="sci-fi-en">Научная фантастика</div></li>
+                        <li><div class="menu-item" data-link="history-en">Исторические</div></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li class="has-children">
+            <span class="icon">+</span>
+            <div class="menu-item">DVD</div>
+            <ul class="nested-list">
+                <li class="has-children">
+                    <span class="icon">+</span>
+                    <div class="menu-item">Отечественные</div>
+                    <ul class="nested-list">
+                        <li><div class="menu-item" data-link="dvd-detectives-ru">Детективы</div></li>
+                        <li><div class="menu-item" data-link="dvd-sci-fi-ru">Научная фантастика</div></li>
+                        <li><div class="menu-item" data-link="dvd-history-ru">Исторические</div></li>
+                    </ul>
+                </li>
+                <li class="has-children">
+                    <span class="icon">+</span>
+                    <div class="menu-item">Зарубежные</div>
+                    <ul class="nested-list">
+                        <li><div class="menu-item" data-link="dvd-detectives-en">Детективы</div></li>
+                        <li><div class="menu-item" data-link="dvd-sci-fi-en">Научная фантастика</div></li>
+                        <li><div class="menu-item" data-link="dvd-history-en">Исторические</div></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <script>
+        const catalog = document.getElementById('catalog');
+
+        catalog.addEventListener('click', function(event) {
+            const target = event.target;
+            const li = target.closest('li');
+            
+            if (!li) return;
+
+            const isIcon = target.classList.contains('icon');
+            const isBtn = target.classList.contains('menu-item');
+
+            if (isIcon || isBtn) {
+                if (li.classList.contains('has-children')) {
+                    li.classList.toggle('open');
+                    const icon = li.querySelector('.icon');
+                    if (icon) {
+                        icon.textContent = li.classList.contains('open') ? '-' : '+';
+                    }
+                } else if (isBtn) {
+                    const link = target.getAttribute('data-link');
+                    alert(`Вы можете перейти по ссылке: /catalog/${link}`);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
